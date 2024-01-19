@@ -1,0 +1,33 @@
+{
+
+   "app": {
+   
+   "title": "GPIO_DEMO",
+   "version": "1.2.0",
+   "supplier": "Open STEMware",
+   "copyright": "bitValence",
+   "url": "https://github.com/cfs-apps/gpio_demo",
+
+   "description": [
+      "Raspberry Pi demo app. It uses the GPIO interface to turn",
+      "and off an LED." 
+   ],
+
+   "cfs": {
+      "cfe-type": "CFE_APP",
+      "obj-file": "gpio_demo",
+      "entry-symbol": "GPIO_DEMO_AppMain",
+      "name": "GPIO_DEMO",
+      "priority": 70,
+      "stack": 32768,
+      "load_addr": 0,
+      "exception-action": 0,
+      "app-framework": "osk",
+      "tables": ["gpio_demo_ini.json"]
+   },
+
+   "requires": ["app_c_fw", "sx128x"]
+
+}}
+
+
