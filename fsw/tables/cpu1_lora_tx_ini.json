@@ -1,6 +1,7 @@
 {
    "title": "Raspberry Pi LoRa Transmit initialization file",
-   "description": [ "Define runtime configurations"],
+   "description": [ "Define runtime configurations",
+                    "RADIO_LORA_*: See SX128x.hpp for definitions"],
    "config": {
       
       "APP_CFE_NAME": "LORA_TX",
@@ -29,7 +30,11 @@
       "RADIO_PIN_DIO2":  -1,
       "RADIO_PIN_DIO3":  -1,
       "RADIO_PIN_TX_EN": 24,
-      "RADIO_PIN_RX_EN": 25
-      
+      "RADIO_PIN_RX_EN": 25,
+
+      "RADIO_FREQUENCY": 2400,
+      "RADIO_LORA_SF":      4,
+      "RADIO_LORA_BW":     10,
+      "RADIO_LORA_CR":    112
   }
 }

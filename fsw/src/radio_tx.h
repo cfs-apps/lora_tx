@@ -17,7 +17,8 @@
 **
 **  Notes:
 **    1. Serves as a bridge between the C++ Radio object and the
-**       Loral Tx app.
+**       Loral Tx app. This header shouldn't include cFS or Lora_Tx app
+**       C header files.
 **
 */
 
@@ -68,6 +69,32 @@ typedef struct
 **
 */
 bool RADIO_TX_InitRadio(const char *SpiDevStr, uint8_t SpiDevNum, const RADIO_TX_Pin_t *RadioPin);
+
+
+/******************************************************************************
+** Function: RADIO_TX_SetLoraParams
+**
+** Set the radio Lora parameters
+**
+** Notes:
+**   None
+**
+*/
+bool RADIO_TX_SetLoraParams(uint8_t SpreadingFactor,
+                            uint8_t Bandwidth,
+                            uint8_t CodingRate);
+
+
+/******************************************************************************
+** Function: RADIO_TX_SetRadioFrequency
+**
+** Set the radio frequency (Hz)
+**
+** Notes:
+**   None
+**
+*/
+bool RADIO_TX_SetRadioFrequency(uint32_t Frequency);
 
 
 /******************************************************************************

@@ -16,7 +16,7 @@
 **    Implement the Transmit Demo Class methods
 **
 **  Notes:
-**    1. Refactored Standford's Lora_tx.cpp functions into this object that
+**    1. Refactored Stanford's Lora_tx.cpp functions into this object that
 **       runs within the context of a cFS Basecamp app. This object provides
 **       demo configuration and operations commands and uses a child task
 **       to manage a transfer. 
@@ -88,6 +88,33 @@ bool RADIO_TX_InitRadio(const char *SpiDevStr, uint8_t SpiDevNum, const RADIO_TX
 
 
 /******************************************************************************
+** Function: RADIO_TX_SetLoraParams
+**
+** Set the radio Lora parameters
+**
+** Notes:
+**   None
+**
+*/
+bool RADIO_TX_SetLoraParams(uint8_t SpreadingFactor,
+                            uint8_t Bandwidth,
+                            uint8_t CodingRate)
+{
+   
+   SX128x::ModulationParams_t ModulationParams;
+   
+   ModulationParams.PacketType                  = SX128x::PACKET_TYPE_LORA;
+   ModulationParams.Params.LoRa.CodingRate      = (SX128x::RadioLoRaCodingRates_t)CodingRate;
+   ModulationParams.Params.LoRa.Bandwidth       = (SX128x::RadioLoRaBandwidths_t)Bandwidth;
+   ModulationParams.Params.LoRa.SpreadingFactor = (SX128x::RadioLoRaSpreadingFactors_t)SpreadingFactor;
+
+   Radio->SetModulationParams(ModulationParams);
+
+   return true;
+   
+} /* RADIO_TX_SetLoraParams() */
+                            
+/******************************************************************************
 ** Function: RADIO_TX_SetSpiSpeed
 **
 ** Set the SPI speed
@@ -104,6 +131,27 @@ bool RADIO_TX_SetSpiSpeed(uint32_t SpiSpeed)
    return true;
    
 } /* End RADIO_TX_SetSpiSpeed() */
+
+
+
+/******************************************************************************
+** Function: RADIO_TX_SetRadioFrequency
+**
+** Set the radio frequency
+**
+** Notes:
+**   1. Assumes Radio has been initialized and frequency (Hz) value has been
+**      validated 
+**
+*/
+bool RADIO_TX_SetRadioFrequency(uint32_t Frequency)
+{
+   
+   Radio->SetRfFrequency(Frequency);
+   
+   return true;
+   
+} /* End RADIO_TX_SetRadioFrequency() */
 
 
 /* Pete's initial command list

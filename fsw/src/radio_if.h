@@ -49,12 +49,13 @@
 ** Event Message IDs
 */
 
-#define RADIO_IF_CONSTRUCTOR_EID        (RADIO_IF_BASE_EID + 0)
-#define RADIO_IF_CHILD_TASK_EID         (RADIO_IF_BASE_EID + 1)
-#define RADIO_TX_INIT_RADIO_CMD_EID     (RADIO_IF_BASE_EID + 2)
-#define RADIO_TX_SEND_RADIO_TLM_CMD_EID (RADIO_IF_BASE_EID + 3)
-#define RADIO_TX_SET_SPI_SPEED_CMD_EID  (RADIO_IF_BASE_EID + 4)
-
+#define RADIO_IF_CONSTRUCTOR_EID             (RADIO_IF_BASE_EID + 0)
+#define RADIO_IF_CHILD_TASK_EID              (RADIO_IF_BASE_EID + 1)
+#define RADIO_TX_INIT_RADIO_CMD_EID          (RADIO_IF_BASE_EID + 2)
+#define RADIO_TX_SEND_RADIO_TLM_CMD_EID      (RADIO_IF_BASE_EID + 3)
+#define RADIO_TX_SET_SPI_SPEED_CMD_EID       (RADIO_IF_BASE_EID + 4)
+#define RADIO_TX_SET_RADIO_FREQUENCY_CMD_EID (RADIO_IF_BASE_EID + 5)
+#define RADIO_TX_SET_LORA_PARAMS_CMD_EID     (RADIO_IF_BASE_EID + 6)
 
 /**********************/
 /** Type Definitions **/
@@ -62,11 +63,17 @@
 
 // Command and Telemetry packets are defined in lora_tx.xml
 
+typedef struct
+{
+   uint32  Frequency;
+   LORA_TX_SetLoRaParams_CmdPayload_t LoRa;
+   
+} RADIO_IF_Config;
+
 
 /******************************************************************************
 ** TX_DEMO_Class
 */
-
 typedef struct
 {
 
@@ -89,6 +96,7 @@ typedef struct
    bool   Initialized;
    uint32 SpiSpeed;
    
+   RADIO_IF_Config RadioConfig;
    
 } RADIO_IF_Class_t;
 
@@ -148,6 +156,24 @@ bool RADIO_IF_InitRadioCmd(void *ObjDataPtr, const CFE_MSG_Message_t *MsgPtr);
 **   2. See file prologue for data source details.
 */
 bool RADIO_IF_SendRadioTlmCmd(void *ObjDataPtr, const CFE_MSG_Message_t *MsgPtr);
+
+
+/******************************************************************************
+** Function: RADIO_IF_SetLoRaParamsCmd
+**
+** Notes:
+**   1. Must match CMDMGR_CmdFuncPtr_t function signature
+*/
+bool RADIO_IF_SetLoRaParamsCmd(void *ObjDataPtr, const CFE_MSG_Message_t *MsgPtr);
+
+
+/******************************************************************************
+** Function: RADIO_IF_SetRadioFrequencyCmd
+**
+** Notes:
+**   1. Must match CMDMGR_CmdFuncPtr_t function signature
+*/
+bool RADIO_IF_SetRadioFrequencyCmd(void *ObjDataPtr, const CFE_MSG_Message_t *MsgPtr);
 
 
 /******************************************************************************

@@ -211,6 +211,8 @@ static int32 InitApp(void)
       CMDMGR_RegisterFunc(CMDMGR_OBJ, LORA_TX_SEND_RADIO_TLM_CC, RADIO_IF_OBJ, RADIO_IF_SendRadioTlmCmd, 0);
       CMDMGR_RegisterFunc(CMDMGR_OBJ, LORA_TX_SET_SPI_SPEED_CC,  RADIO_IF_OBJ, RADIO_IF_SetSpiSpeedCmd,  sizeof(LORA_TX_SetSpiSpeed_CmdPayload_t));
 
+      CMDMGR_RegisterFunc(CMDMGR_OBJ, LORA_TX_SET_LO_RA_PARAMS_CC, RADIO_IF_OBJ, RADIO_IF_SetLoRaParamsCmd,  sizeof(LORA_TX_SetLoRaParams_CmdPayload_t));
+
       CFE_MSG_Init(CFE_MSG_PTR(LoraTx.StatusTlm.TelemetryHeader), CFE_SB_ValueToMsgId(INITBL_GetIntConfig(INITBL_OBJ, CFG_LORA_TX_STATUS_TLM_TOPICID)), sizeof(LORA_TX_StatusTlm_t));
    
       /*

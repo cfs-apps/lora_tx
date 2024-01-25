@@ -30,7 +30,7 @@
       <!--**** DataTypeSet:  Entry Types ****-->
       <!--***********************************-->
 
-
+         
       <!--***************************************-->
       <!--**** DataTypeSet: Command Payloads ****-->
       <!--***************************************-->
@@ -40,7 +40,21 @@
           <Entry name="Speed"   type="BASE_TYPES/uint32"  shortDescription="Clock speed in Hz" />
         </EntryList>
       </ContainerDataType>
+
+      <ContainerDataType name="SetRadioFrequency_CmdPayload">
+        <EntryList>
+          <Entry name="Frequency"   type="BASE_TYPES/uint32"  shortDescription="Radio frequency MHz" />
+        </EntryList>
+      </ContainerDataType>
       
+      <ContainerDataType name="SetLoRaParams_CmdPayload" shortDescription="See SX128x.hpp ModulationParams_t">
+        <EntryList>
+          <Entry name="SpreadingFactor" type="SX128X/LoRaSpreadingFactor" shortDescription="" />
+          <Entry name="Bandwidth"       type="SX128X/LoRaBandwidth"       shortDescription="" />
+          <Entry name="CodingRate"      type="SX128X/LoRaCodingRate"      shortDescription="" />
+        </EntryList>
+      </ContainerDataType>
+         
       <!--*****************************************-->
       <!--**** DataTypeSet: Telemetry Payloads ****-->
       <!--*****************************************-->
@@ -54,17 +68,21 @@
       
       <ContainerDataType name="RadioTlm_Payload" shortDescription="Radio configuration settings">
         <EntryList>
-          <Entry name="SpiDevStr"     type="BASE_TYPES/PathName"    shortDescription="Linux device path string" />
-          <Entry name="SpiDevNum"     type="BASE_TYPES/uint16"    />
-          <Entry name="SpiSpeed"      type="BASE_TYPES/uint32"    />
-          <Entry name="RadioPinBusy"  type="BASE_TYPES/uint8"     />
-          <Entry name="RadioPinNrst"  type="BASE_TYPES/uint8"     />
-          <Entry name="RadioPinNss"   type="BASE_TYPES/uint8"     />
-          <Entry name="RadioPinDio1"  type="BASE_TYPES/uint8"     />
-          <Entry name="RadioPinDio2"  type="BASE_TYPES/uint8"     />
-          <Entry name="RadioPinDio3"  type="BASE_TYPES/uint8"     />
-          <Entry name="RadioPinTxEn"  type="BASE_TYPES/uint8"     />
-          <Entry name="RadioPinRxEn"  type="BASE_TYPES/uint8"     />
+          <Entry name="SpiDevStr"       type="BASE_TYPES/PathName"  shortDescription="Linux device path string" />
+          <Entry name="SpiDevNum"       type="BASE_TYPES/uint16"    />
+          <Entry name="SpiSpeed"        type="BASE_TYPES/uint32"    />
+          <Entry name="RadioPinBusy"    type="BASE_TYPES/uint8"     />
+          <Entry name="RadioPinNrst"    type="BASE_TYPES/uint8"     />
+          <Entry name="RadioPinNss"     type="BASE_TYPES/uint8"     />
+          <Entry name="RadioPinDio1"    type="BASE_TYPES/uint8"     />
+          <Entry name="RadioPinDio2"    type="BASE_TYPES/uint8"     />
+          <Entry name="RadioPinDio3"    type="BASE_TYPES/uint8"     />
+          <Entry name="RadioPinTxEn"    type="BASE_TYPES/uint8"     />
+          <Entry name="RadioPinRxEn"    type="BASE_TYPES/uint8"     />
+          <Entry name="RadioFrequency"  type="BASE_TYPES/uint32"    />          
+          <Entry name="LoRaSpreadingFactor" type="SX128X/LoRaSpreadingFactor" />
+          <Entry name="LoRaBandwidth"       type="SX128X/LoRaBandwidth"       />
+          <Entry name="LoRaCodingRate"      type="SX128X/LoRaCodingRate"      />
         </EntryList>
       </ContainerDataType>
         
@@ -106,6 +124,24 @@
         <ConstraintSet>
           <ValueConstraint entry="Sec.FunctionCode" value="${APP_C_FW/APP_BASE_CC} + 2" />
         </ConstraintSet>
+      </ContainerDataType>
+      
+      <ContainerDataType name="SetRadioFrequency" baseType="CommandBase" shortDescription="">
+        <ConstraintSet>
+          <ValueConstraint entry="Sec.FunctionCode" value="${APP_C_FW/APP_BASE_CC} + 3" />
+        </ConstraintSet>
+        <EntryList>
+          <Entry type="SetRadioFrequency_CmdPayload" name="Payload" />
+        </EntryList>
+      </ContainerDataType>
+
+      <ContainerDataType name="SetLoRaParams" baseType="CommandBase" shortDescription="">
+        <ConstraintSet>
+          <ValueConstraint entry="Sec.FunctionCode" value="${APP_C_FW/APP_BASE_CC} + 4" />
+        </ConstraintSet>
+        <EntryList>
+          <Entry type="SetLoRaParams_CmdPayload" name="Payload" />
+        </EntryList>
       </ContainerDataType>
       
       <!--****************************************-->
